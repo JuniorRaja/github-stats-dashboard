@@ -300,7 +300,7 @@ const CardsComponent = ({ username }: { username: string }) => {
 
   return (
     <>
-      <div className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-6 rounded-lg shadow-lg mx-auto">
+      <div className="bg-n-8/90 backdrop-blur-sm text-gray-900 dark:text-white p-6 rounded-lg shadow-lg mx-auto">
         {userData && userData[0].name !== "" && (
           <Header
             userData={userData}
