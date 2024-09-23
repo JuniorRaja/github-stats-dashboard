@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 w-full z-50 border-b border-n-6 bg-n-8/90 backdrop-blur-sm ">
       <nav
-        className="fixed top-[4rem] left-0 right-0 bottom-0 bg-n-8/90 lg:static lg:flex
+        className="bg-n-8/90 lg:static 
         lg:mx-auto z-auto flex items-center bg-transparent justify-between px-10 py-4 lg:py-0 lg:px-0 
         lg:space-x-4 lg:w-3/4 xl:w-2/3"
       >
@@ -28,25 +28,24 @@ const Header = () => {
         <div className="flex flex-row space-x-4">
           <Link href="/">
             <span
-              className="block relative text-lg font-bold uppercase text-gray-800 dark:text-gray-200 
-          transition-colors hover:text-color-1  px-6 py-6 md:py-8 lg:-mr-0.25 xl:px-12 z-2 lg:text-xs 
-          
-          lg:leading-5 lg:hover:text-gray-800  dark:lg:hover:text-white"
+              className="block text-lg uppercase text-gray-800 dark:text-gray-200 
+          transition-colors hover:text-xl hover:font-bold p-4 lg:p-6 lg:-mr-0.25 z-2 lg:text-xs 
+        :hover:text-gray-800  dark:hover:text-white"
             >
               Home
             </span>
           </Link>
           <Link href="/about">
             <span
-              className="block relative text-lg font-bold uppercase text-gray-800 dark:text-gray-200 
-          transition-colors hover:text-color-1  px-6 py-6 md:py-8 lg:-mr-0.25 xl:px-12 z-2 lg:text-xs 
-                    lg:leading-5 lg:hover:text-gray-800  dark:lg:hover:text-white"
+              className="block text-lg uppercase text-gray-800 dark:text-gray-200 
+          transition-colors hover:text-xl hover:font-bold p-4 lg:p-6 lg:-mr-0.25 z-2 lg:text-xs 
+                    :hover:text-gray-800  dark:hover:text-white"
             >
               About
             </span>
           </Link>
         </div>
-        <div>
+        <div className="px-10">
           <button
             id="theme-toggle"
             onClick={toggleTheme}
