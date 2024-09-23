@@ -10,9 +10,8 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 w-full z-50 border-b border-n-6 bg-n-8/90 backdrop-blur-sm ">
       <nav
-        className="bg-n-8/90 lg:static 
-        lg:mx-auto z-auto flex items-center bg-transparent justify-between px-10 py-4 lg:py-0 lg:px-0 
-        lg:space-x-4 lg:w-3/4 xl:w-2/3"
+        className="bg-n-8/90 lg:mx-auto z-auto flex items-center bg-transparent justify-between px-10 py-4 lg:py-0 lg:px-0 
+        lg:w-3/4 xl:w-2/3"
       >
         <div className="flex flex-row items-center">
           <PiGithubLogoDuotone
@@ -28,8 +27,8 @@ const Header = () => {
         <div className="flex flex-row space-x-4">
           <Link href="/">
             <span
-              className="block text-lg uppercase text-gray-800 dark:text-gray-200 
-          transition-colors hover:text-xl hover:font-bold p-4 lg:p-6 lg:-mr-0.25 z-2 lg:text-xs 
+              className="block text-lg text-gray-800 dark:text-gray-200 
+          transition-colors hover:text-xl hover:font-bold p-4 lg:p-6 lg:-mr-0.25 z-2 
         :hover:text-gray-800  dark:hover:text-white"
             >
               Home
@@ -37,15 +36,15 @@ const Header = () => {
           </Link>
           <Link href="/about">
             <span
-              className="block text-lg uppercase text-gray-800 dark:text-gray-200 
-          transition-colors hover:text-xl hover:font-bold p-4 lg:p-6 lg:-mr-0.25 z-2 lg:text-xs 
+              className="block text-lg text-gray-800 dark:text-gray-200 
+          transition-colors hover:text-xl hover:font-bold p-4 lg:p-6 lg:-mr-0.25 z-2 
                     :hover:text-gray-800  dark:hover:text-white"
             >
               About
             </span>
           </Link>
         </div>
-        <div className="px-10">
+        <div className="px-10 lg:ml-12">
           <button
             id="theme-toggle"
             onClick={toggleTheme}
