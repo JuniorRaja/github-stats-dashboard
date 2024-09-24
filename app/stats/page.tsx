@@ -1,7 +1,5 @@
 "use client";
 import CardComponent from "@/components/github-stats";
-import { useContext } from "react";
-import { ThemeContext } from "@/app/provider";
 import { useSearchParams } from "next/navigation";
 const Stats = () => {
   const searchParams = useSearchParams();
