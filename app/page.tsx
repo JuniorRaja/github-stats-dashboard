@@ -22,7 +22,7 @@ const Home = () => {
             GitHub Stats
           </h1>
           <p className="text-gray-600 dark:text-gray-400 mb-8">
-            A modern way to visualize your GitHub statistics.
+            A modern UI to visualize your GitHub statistics.
           </p>
           <UsernameInput />
 
