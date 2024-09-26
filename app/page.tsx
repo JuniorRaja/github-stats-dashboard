@@ -4,13 +4,12 @@ import { useRouter } from "next/navigation";
 import UsernameInput from "@/components/textbox";
 
 const Home = () => {
-  const [username, setUsername] = useState("");
+  const [inputStr, setInputStr] = useState<string>("");
   const router = useRouter();
 
   const handleSearch = () => {
-    console.log(username);
-    if (username) {
-      router.push(`/stats?username=${username}`);
+    if (inputStr) {
+      router.push(`/stats?username=${inputStr}`);
     }
   };
 
@@ -24,7 +23,7 @@ const Home = () => {
           <p className="text-gray-600 dark:text-gray-400 mb-8">
             A modern UI to visualize your GitHub statistics.
           </p>
-          <UsernameInput />
+          <UsernameInput value={inputStr} onChange={setInputStr} />
 
           <button
             onClick={handleSearch}

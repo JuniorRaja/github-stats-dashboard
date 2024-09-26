@@ -71,7 +71,6 @@ interface iStats {
 
 const CardsComponent = ({ username }: { username: string }) => {
   const router = useRouter();
-  //const [username, setUsername] = useState<string>("");
   const [error, setError] = useState<string>("");
 
   // State to hold the array of card items
@@ -195,7 +194,7 @@ const CardsComponent = ({ username }: { username: string }) => {
             icon: <Calendar className="w-5 h-5" />,
           },
           {
-            id: 3,
+            id: 4,
             labelname: "Last Active",
             count: userStatistics.updatedAt,
             icon: <Calendar className="w-5 h-5" />,
@@ -351,8 +350,10 @@ function Header({
             <Image
               src={userData[0].avatarUrl}
               alt={userData[0].name}
-              layout="fill"
-              objectFit="cover"
+              style={{ objectFit: "cover" }}
+              width={128}
+              height={128}
+              priority
             />
           </motion.div>
           <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mt-2 text-center">
@@ -409,7 +410,7 @@ function Header({
             </motion.h1>
           </div>
           <div>
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
@@ -423,7 +424,7 @@ function Header({
                   {userData[0].location}
                 </span>
               </div>
-            </motion.p>
+            </motion.div>
           </div>
           <div className="flex space-x-4">
             {userStats.map((stat) => (
@@ -455,7 +456,7 @@ function Header({
                     ? "bg-green-600 dark:bg-green-800 shadow-glow-green"
                     : "bg-red-600 dark:bg-red-800 shadow-glow-red"
                 }`}
-              ></div>
+              />
             </div>
           ))}
         </div>

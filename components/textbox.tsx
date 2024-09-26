@@ -1,8 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { debounce } from "../lib/debounce";
 
-const UsernameInput = () => {
-  const [username, setUsername] = useState("");
+interface TextBoxProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const UsernameInput: React.FC<TextBoxProps> = ({ value, onChange }) => {
   const [isValid, setIsValid] = useState<null | boolean>(null);
   const [loading, setLoading] = useState(false);
 
@@ -29,13 +33,17 @@ const UsernameInput = () => {
     []
   );
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.value); // Call the parent’s onChange function with the new value
+  };
+
   useEffect(() => {
-    if (username) {
-      validateUsername(username);
+    if (value) {
+      validateUsername(value);
     } else {
       setIsValid(null); // Reset when input is cleared
     }
-  }, [username, validateUsername]);
+  }, [value, validateUsername]);
 
   return (
     <div className="relative mx-auto">
@@ -49,17 +57,17 @@ const UsernameInput = () => {
             : "border-red-500"
         }`}
         placeholder="Enter GitHub username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={value}
+        onChange={handleInputChange}
       />
       {isValid !== null && !loading && (
-        <span
+        <div
           className={`absolute right-3 text-xl top-2 ${
             isValid ? "text-green-500" : "text-red-500"
           }`}
         >
           {isValid ? "✔️" : "⚠️"}
-        </span>
+        </div>
       )}
       {loading && <span className="absolute right-3 top-2">...</span>}
     </div>
