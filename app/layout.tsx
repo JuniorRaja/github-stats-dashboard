@@ -28,9 +28,7 @@ export default function RootLayout({
         <ThemeProvider>
           <main className="relative bg-gradient-to-b from-white to-neutral-300 dark:from-neutral-950 dark:to-neutral-800  flex justify-center items-center overflow-hidden flex-col mx-auto sm:px-10 px-5">
             <Header />
-            <BackgroundBeams>
-              <div className="">{children}</div>
-            </BackgroundBeams>
+            <BackgroundBeams>{children}</BackgroundBeams>
           </main>
         </ThemeProvider>
       </body>
