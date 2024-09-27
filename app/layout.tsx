@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${spaceGrotesk.className} antialiased`}>
         <ThemeProvider>
-          <main className="relative bg-gradient-to-b from-white to-neutral-300 dark:from-neutral-950 dark:to-neutral-800  flex justify-center items-center overflow-hidden flex-col mx-auto sm:px-10 px-5">
+          <main className="relative bg-gradient-to-b from-white to-neutral-300 dark:from-neutral-950 dark:to-neutral-900 backdrop-blur-sm  flex justify-center items-center overflow-hidden flex-col mx-auto sm:px-10 px-5">
             <Header />
             <BackgroundBeams>{children}</BackgroundBeams>
           </main>

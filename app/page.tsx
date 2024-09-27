@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import UsernameInput from "@/components/textbox";
+import Button from "@/components/button";
 
 const Home = () => {
   const [inputStr, setInputStr] = useState<string>("");
@@ -15,8 +16,8 @@ const Home = () => {
 
   return (
     <>
-      <div className="max-w-7xl w-full z-10">
-        <div className="min-h-screen flex flex-col items-center justify-center bg-transparent">
+      <div className="max-w-7xl w-full z-10 ">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-n-8/90 backdrop-blur-sm">
           <h1 className="text-5xl font-bold text-gray-800 dark:text-gray-200 mb-4">
             GitHub Stats
           </h1>
@@ -25,12 +26,7 @@ const Home = () => {
           </p>
           <UsernameInput value={inputStr} onChange={setInputStr} />
 
-          <button
-            onClick={handleSearch}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mt-10"
-          >
-            Search
-          </button>
+          <Button onClick={handleSearch} buttonText="Get Stats" />
         </div>
       </div>
     </>

@@ -49,6 +49,7 @@ const UsernameInput: React.FC<TextBoxProps> = ({ value, onChange }) => {
     <div className="relative mx-auto">
       <input
         type="text"
+        autoComplete="off"
         className={`border p-2 rounded-lg w-64 mb-4 text-gray-950 light:text-gray-200 ${
           isValid === null
             ? ""

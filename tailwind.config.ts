@@ -21,6 +21,19 @@ const config: Config = {
         "glow-green": "0 0 10px 2px rgba(34, 197, 94, 0.6)", // green glow
         "glow-red": "0 0 10px 2px rgba(239, 68, 68, 0.6)", // red glow
       },
+      animation: {
+        shimmer: "shimmer 2s linear infinite",
+      },
+      keyframes: {
+        shimmer: {
+          from: {
+            backgroundPosition: "0 0",
+          },
+          to: {
+            backgroundPosition: "-200% 0",
+          },
+        },
+      },
     },
   },
   plugins: [addVariablesForColors],
