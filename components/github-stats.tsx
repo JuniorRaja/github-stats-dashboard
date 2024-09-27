@@ -40,6 +40,7 @@ import { FaBook } from "react-icons/fa";
 import ErrorComponent from "@/components/error";
 import { iGitHubUserInfo } from "@/types/types";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { MultiStepLoader as Loader } from "@/components/multi-step-loader";
 
 const getIconClass = (language: string) => {
   switch (language) {
@@ -72,6 +73,25 @@ interface iStats {
 const CardsComponent = ({ username }: { username: string }) => {
   const router = useRouter();
   const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState(true);
+
+  const loadingStates = [
+    {
+      text: "Fetching User Profile Details",
+    },
+    {
+      text: "Gathering Repository Statistics",
+    },
+    {
+      text: "Analyzing Contribution Data",
+    },
+    {
+      text: "Finalizing Stats and Displaying Results",
+    },
+    {
+      text: "Final touches",
+    },
+  ];
 
   // State to hold the array of card items
   const [userData, setUserData] = useState<iGitHubUserInfo[]>([
@@ -146,6 +166,9 @@ const CardsComponent = ({ username }: { username: string }) => {
 
   const fetchData = async (username: string) => {
     try {
+      //Display loader
+      setLoading(true);
+
       const result = await fetchGitHubDetails(username);
 
       if (result) {
@@ -283,10 +306,23 @@ const CardsComponent = ({ username }: { username: string }) => {
         setUserStats(updatedUserStats);
         setUserDetStats(updatedUserDetStats);
         setRepoStatsDetailed(updatedRepoStatus);
+        await simulateLoading();
+        setLoading(false);
       }
     } catch (error: any) {
+      setLoading(false);
+      setError(error.message);
       console.error("fetchData -log: Error fetching data", error);
     }
+  };
+
+  //a function with 2 seconds timeout to simulate loading
+  const simulateLoading = async () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve("resolved");
+      }, 5000);
+    });
   };
 
   const handleSearch = async () => {
@@ -299,30 +335,42 @@ const CardsComponent = ({ username }: { username: string }) => {
 
   return (
     <>
-      <div className="bg-n-8/90 backdrop-blur-sm text-gray-900 dark:text-white p-6 rounded-lg shadow-lg mx-auto">
-        {userData && userData[0].name !== "" && (
-          <Header
-            userData={userData}
-            userStats={userStats}
-            userDetStats={userDetStats}
+      {loading && (
+        <div className="w-full h-[60vh] flex items-center justify-center">
+          {/* Core Loader Modal */}
+          <Loader
+            loadingStates={loadingStates}
+            loading={loading}
+            duration={1100}
           />
-        )}
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold mb-4 text-violet-600 dark:text-violet-400">
-            GitHub Stats
-          </h2>
-          <div className="grid grid-cols-2 gap-4 mb-6">
-            {repoStats.map((stat, index) => (
-              <StatItem
-                key={index}
-                icon={stat.icon}
-                label={stat.labelname}
-                value={stat.count}
-              />
-            ))}
+        </div>
+      )}
+      {!loading && (
+        <div className="bg-n-8/90 backdrop-blur-sm text-gray-900 dark:text-white p-6 rounded-lg shadow-lg mx-auto">
+          {userData && userData[0].name !== "" && (
+            <Header
+              userData={userData}
+              userStats={userStats}
+              userDetStats={userDetStats}
+            />
+          )}
+          <div className="mt-8">
+            <h2 className="text-2xl font-bold mb-4 text-violet-600 dark:text-violet-400">
+              GitHub Stats
+            </h2>
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              {repoStats.map((stat, index) => (
+                <StatItem
+                  key={index}
+                  icon={stat.icon}
+                  label={stat.labelname}
+                  value={stat.count}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
@@ -345,7 +393,7 @@ function Header({
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-fuchsia-400"
+            className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-solid border-gray-200 dark:border-gray-800 shadow-lg"
           >
             <Image
               src={userData[0].avatarUrl}
