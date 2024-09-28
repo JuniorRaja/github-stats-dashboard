@@ -131,7 +131,7 @@ export const fetchGitHubDetails = async (username: string) =>
     const userDetails: iGitHubUserInfo = {
       id: apiRes.id,
       login: apiRes.login,
-      name: apiRes.name,
+      name: apiRes.name ?? "",
       bio: apiRes.bio ?? "",
       company: apiRes.company ?? "",
       location: apiRes.location ?? "",
