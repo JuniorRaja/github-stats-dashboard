@@ -1,35 +1,10 @@
-export interface NavBarItem {
-  id: number;
-  title: string;
-  url: string;
-  onlyMobile?: boolean;
-}
-
-export interface NavBarList {
-  navItems: NavBarItem[];
-}
-
-export interface AlbumItem {
-  id: number;
-  name: string;
-  likes: number;
-  views: number;
-  img: string;
-  route: string;
-  des: string;
-}
-
-export interface ColorState {
-  primaryColor: string;
-}
-
-export interface iGitHubUserStatus {
+export interface iUserStatus {
   emoji: string;
   message: string | null;
   indicatesLimitedAvailability: boolean;
 }
 
-export interface iGitHubUserInfo {
+export interface iUserInfo {
   id: string;
   login: string;
   name: string;
@@ -47,10 +22,10 @@ export interface iGitHubUserInfo {
   isHireable: boolean;
   isSiteAdmin: boolean;
   isViewer: boolean;
-  status?: iGitHubUserStatus;
+  status?: iUserStatus;
 }
 
-export interface iGutHubStatistics {
+export interface iStatistics {
   createdAt: string;
   updatedAt: string;
   followers: number;
@@ -62,4 +37,35 @@ export interface iGutHubStatistics {
   pullRequests: number;
   issues: number;
   commitComments: number;
+}
+
+export interface iRepository {
+  name: string;
+  description: string;
+  url: string;
+  isPrivate: boolean;
+  isFork: boolean;
+  createdAt: string;
+  updatedAt: string;
+  pushedAt: string;
+  stargazerCount: number;
+  forkCount: number;
+  issuesCount: number;
+  pullRequestsCount: number;
+  primaryLanguage: {
+    name: string;
+    color: string;
+  };
+  languages: Array<{
+    name: string;
+    color: string;
+    size: number;
+  }>;
+  repositoryTopics: Array<{
+    topicName: string;
+  }>;
+  licenseInfo: {
+    name: string;
+    spdxId: string;
+  } | null;
 }

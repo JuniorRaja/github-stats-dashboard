@@ -38,9 +38,10 @@ import {
 } from "react-icons/fa";
 import { FaBook } from "react-icons/fa";
 import ErrorComponent from "@/components/error";
-import { iGitHubUserInfo } from "@/types/types";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { iUserInfo, iRepository } from "@/types/types";
+import { useRouter } from "next/navigation";
 import { MultiStepLoader as Loader } from "@/components/multi-step-loader";
+import RepositoryList from "./repoList";
 
 const getIconClass = (language: string) => {
   switch (language) {
@@ -74,6 +75,7 @@ const CardsComponent = ({ username }: { username: string }) => {
   const router = useRouter();
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(true);
+  const [repos, setRepos] = useState<iRepository[]>([]);
 
   const loadingStates = [
     {
@@ -94,7 +96,7 @@ const CardsComponent = ({ username }: { username: string }) => {
   ];
 
   // State to hold the array of card items
-  const [userData, setUserData] = useState<iGitHubUserInfo[]>([
+  const [userData, setUserData] = useState<iUserInfo[]>([
     {
       id: "",
       name: "",
@@ -175,7 +177,7 @@ const CardsComponent = ({ username }: { username: string }) => {
         const userDetails = result.userDetails;
         const userStatistics = result.userStatistics;
 
-        const updatedUserData: iGitHubUserInfo[] = [
+        const updatedUserData: iUserInfo[] = [
           {
             id: userDetails.id,
             login: userDetails.login,
@@ -302,10 +304,13 @@ const CardsComponent = ({ username }: { username: string }) => {
           },
         ];
 
+        const updatedRepos = result.repositories;
+
         setUserData(updatedUserData);
         setUserStats(updatedUserStats);
         setUserDetStats(updatedUserDetStats);
         setRepoStatsDetailed(updatedRepoStatus);
+        setRepos(updatedRepos);
         await simulateLoading();
         setLoading(false);
       }
@@ -321,7 +326,7 @@ const CardsComponent = ({ username }: { username: string }) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve("resolved");
-      }, 5000);
+      }, 3500);
     });
   };
 
@@ -369,6 +374,12 @@ const CardsComponent = ({ username }: { username: string }) => {
               ))}
             </div>
           </div>
+          <div className="mt-8">
+            <h2 className="text-2xl font-bold mb-4 text-violet-600 dark:text-violet-400">
+              Repositories
+            </h2>
+            <RepositoryList repositories={repos} />
+          </div>
         </div>
       )}
     </>
@@ -380,7 +391,7 @@ function Header({
   userStats,
   userDetStats,
 }: {
-  userData: iGitHubUserInfo[];
+  userData: iUserInfo[];
   userStats: iStats[];
   userDetStats: iStats[];
 }) {

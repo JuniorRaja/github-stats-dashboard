@@ -1,91 +1,10 @@
-//GQL API end points
 import { QUERY_GET_USER_DETAILS } from "@/graphql/query";
 import {
-  iGitHubUserInfo,
-  iGitHubUserStatus,
-  iGutHubStatistics,
+  iUserInfo,
+  iUserStatus,
+  iStatistics,
+  iRepository,
 } from "@/types/types";
-
-// User Status Interface
-interface UserStatus {
-  emoji: string;
-  message: string | null;
-  indicatesLimitedAvailability: boolean;
-}
-
-// Repository Owner Interface
-interface RepositoryOwner {
-  login: string;
-}
-
-// Repository Interface
-interface Repository {
-  name: string;
-  owner: RepositoryOwner;
-}
-
-// Contributions Interface
-interface Contributions {
-  totalCount: number;
-}
-
-// Commit Contributions by Repository Interface
-interface CommitContributionsByRepository {
-  repository: Repository;
-  contributions: Contributions;
-}
-
-// Contribution Calendar Interface
-interface ContributionCalendar {
-  totalContributions: number;
-}
-
-// Contributions Collection Interface
-interface ContributionsCollection {
-  totalCommitContributions: number;
-  restrictedContributionsCount: number;
-  contributionCalendar: ContributionCalendar;
-  commitContributionsByRepository: CommitContributionsByRepository[];
-}
-
-// Count Wrapper Interface (Used for Followers, Following, Repositories, Gists, etc.)
-interface CountWrapper {
-  totalCount: number;
-}
-
-// User Interface
-export interface User {
-  id: string;
-  login: string;
-  name: string;
-  bio: string;
-  company: string;
-  location: string;
-  email: string;
-  websiteUrl: string;
-  twitterUsername: string;
-  avatarUrl: string;
-  createdAt: string;
-  updatedAt: string;
-  isBountyHunter: boolean;
-  isCampusExpert: boolean;
-  isDeveloperProgramMember: boolean;
-  isEmployee: boolean;
-  isHireable: boolean;
-  isSiteAdmin: boolean;
-  isViewer: boolean;
-  status: UserStatus;
-  followers: number;
-  following: number;
-  repositories: number;
-  contributionsCollection?: ContributionsCollection;
-  gists?: CountWrapper;
-  starredRepositories: CountWrapper;
-  watching: CountWrapper;
-  pullRequests: CountWrapper;
-  issues: CountWrapper;
-  commitComments: CountWrapper;
-}
 
 export const fetchGitHubDetails = async (username: string) =>
   //: Promise<User | null>
@@ -122,13 +41,13 @@ export const fetchGitHubDetails = async (username: string) =>
     console.log("rateLimit details: ", data.data.rateLimit);
 
     //Prepare the result data
-    const userStatus: iGitHubUserStatus = {
+    const userStatus: iUserStatus = {
       emoji: apiRes.status?.emoji?.toString() ?? "",
       message: apiRes.status?.message,
       indicatesLimitedAvailability: apiRes.status?.indicatesLimitedAvailability,
     };
 
-    const userDetails: iGitHubUserInfo = {
+    const userDetails: iUserInfo = {
       id: apiRes.id,
       login: apiRes.login,
       name: apiRes.name ?? "",
@@ -150,7 +69,7 @@ export const fetchGitHubDetails = async (username: string) =>
       status: apiRes.status && userStatus,
     };
 
-    const userStatistics: iGutHubStatistics = {
+    const userStatistics: iStatistics = {
       createdAt: apiRes.createdAt
         ? new Date(apiRes.createdAt).toLocaleString("en-US", {
             month: "short",
@@ -176,9 +95,64 @@ export const fetchGitHubDetails = async (username: string) =>
       repositories: apiRes.repositories.totalCount,
     };
 
+    const repositories: iRepository[] = apiRes.repositories.nodes.map(
+      (repo: any) => ({
+        name: repo.name || "",
+        description: repo.description || "No description available",
+        url: repo.url || "#",
+        isPrivate: repo.isPrivate ?? false,
+        isFork: repo.isFork ?? false,
+        createdAt: repo.createdAt
+          ? new Date(repo.createdAt).toLocaleString("en-US", {
+              month: "short",
+              year: "2-digit",
+            })
+          : "",
+        updatedAt: repo.updatedAt
+          ? new Date(repo.updatedAt).toLocaleString("en-US", {
+              day: "2-digit",
+              month: "short",
+              year: "2-digit",
+            })
+          : "",
+        pushedAt: repo.pushedAt
+          ? new Date(repo.pushedAt).toLocaleString("en-US", {
+              day: "2-digit",
+              month: "short",
+              year: "2-digit",
+            })
+          : "",
+        stargazerCount: repo.stargazerCount ?? 0,
+        forkCount: repo.forkCount ?? 0,
+        issuesCount: repo.issues?.totalCount ?? 0,
+        pullRequestsCount: repo.pullRequests?.totalCount ?? 0,
+        primaryLanguage: {
+          name: repo.primaryLanguage?.name || "Unknown",
+          color: repo.primaryLanguage?.color || "#000000",
+        },
+        languages:
+          repo.languages?.edges.map((lang: any) => ({
+            name: lang?.node?.name || "Unknown",
+            color: lang?.node?.color || "#000000",
+            size: lang?.size ?? 0,
+          })) || [],
+        repositoryTopics:
+          repo.repositoryTopics?.edges.map((topic: any) => ({
+            topicName: topic?.node?.topic?.name || "No Topic",
+          })) || [],
+        licenseInfo: repo.licenseInfo
+          ? {
+              name: repo.licenseInfo.name || "No license",
+              spdxId: repo.licenseInfo.spdxId || "N/A",
+            }
+          : null,
+      })
+    );
+
     const outputobj = {
       userDetails,
       userStatistics,
+      repositories,
     };
 
     return outputobj;
