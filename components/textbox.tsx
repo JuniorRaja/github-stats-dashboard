@@ -50,6 +50,7 @@ const UsernameInput: React.FC<TextBoxProps> = ({ value, onChange }) => {
       <input
         type="text"
         autoComplete="off"
+        spellCheck="false"
         className={`border p-2 rounded-lg w-64 mb-4 text-gray-950 light:text-gray-200 ${
           isValid === null
             ? ""

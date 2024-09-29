@@ -1,81 +1,122 @@
 export const QUERY_GET_USER_DETAILS = `
   query getUserDetails($username: String!) {
-  user(login: $username) {
-    id
-    login
-    name
-    bio
-    company
-    location
-    email
-    websiteUrl
-    twitterUsername
-    avatarUrl
-    createdAt
-    updatedAt
-    isBountyHunter
-    isCampusExpert
-    isDeveloperProgramMember
-    isEmployee
-    isHireable
-    isSiteAdmin
-    isViewer
-    status {
-      emoji
-      message
-      indicatesLimitedAvailability
-    }
-    followers {
-      totalCount
-    }
-    following {
-      totalCount
-    }
-    repositories {
-      totalCount
-    }
-    contributionsCollection {
-      totalCommitContributions
-      restrictedContributionsCount
-      contributionCalendar {
-        totalContributions
+    user(login: $username) {
+      id
+      login
+      name
+      bio
+      company
+      location
+      email
+      websiteUrl
+      twitterUsername
+      avatarUrl
+      createdAt
+      updatedAt
+      isBountyHunter
+      isCampusExpert
+      isDeveloperProgramMember
+      isEmployee
+      isHireable
+      isSiteAdmin
+      isViewer
+      status {
+        emoji
+        message
+        indicatesLimitedAvailability
       }
-      commitContributionsByRepository {
-        repository {
+      followers {
+        totalCount
+      }
+      following {
+        totalCount
+      }
+      repositories(first: 100, orderBy: {field: UPDATED_AT, direction: DESC}) {
+        totalCount
+        nodes {
           name
-          owner {
-            login
+          description
+          url
+          isPrivate
+          isFork
+          createdAt
+          updatedAt
+          pushedAt
+          stargazerCount
+          forkCount
+          issues {
+            totalCount
+          }
+          primaryLanguage {
+            name
+            color
+          }
+          languages(first: 5) {
+            edges {
+              node {
+                name
+                color
+              }
+              size
+            }
+          }
+          licenseInfo {
+            name
+            spdxId
+          }
+          repositoryTopics(first: 5) {
+            edges {
+              node {
+                topic {
+                  name
+                }
+              }
+            }
           }
         }
-        contributions {
-          totalCount
+      }
+      contributionsCollection {
+        totalCommitContributions
+        restrictedContributionsCount
+        contributionCalendar {
+          totalContributions
+        }
+        commitContributionsByRepository {
+          repository {
+            name
+            owner {
+              login
+            }
+          }
+          contributions {
+            totalCount
+          }
         }
       }
+      starredRepositories {
+        totalCount
+      }
+      watching {
+        totalCount
+      }
+      pullRequests {
+        totalCount
+      }
+      issues {
+        totalCount
+      }
+      commitComments {
+        totalCount
+      }
     }
-    starredRepositories {
-      totalCount
-    }
-    watching {
-      totalCount
-    }
-    pullRequests {
-      totalCount
-    }
-    issues {
-      totalCount
-    }
-    commitComments {
-      totalCount
+    rateLimit {
+      cost
+      resetAt
+      used
+      remaining
+      nodeCount
     }
   }
-  rateLimit{
-    cost
-    resetAt
-    used
-    remaining
-    nodeCount
-  }
-}
   `;
 
 const gql_allFields = `
