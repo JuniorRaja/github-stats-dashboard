@@ -7,13 +7,10 @@ import {
   GitCommit,
   GitPullRequest,
   AlertCircle,
-  GitFork,
   Activity,
   Flame,
   Calendar,
   Users,
-  UserPlus,
-  Book,
   Code,
 } from "lucide-react";
 import {
@@ -37,7 +34,6 @@ import {
   FaEye,
 } from "react-icons/fa";
 import { FaBook } from "react-icons/fa";
-import ErrorComponent from "@/components/error";
 import { iUserInfo, iRepository } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { MultiStepLoader as Loader } from "@/components/multi-step-loader";
