@@ -3,13 +3,17 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import UsernameInput from "@/components/textbox";
 import Button from "@/components/button";
+import { MultiStepLoader } from "@/components/multi-step-loader";
+import { loadingStates } from "@/data/data";
 
 const Home = () => {
   const [inputStr, setInputStr] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleSearch = () => {
     if (inputStr) {
+      setLoading(true);
       router.push(`/stats?username=${inputStr}`);
     }
   };
@@ -27,6 +31,13 @@ const Home = () => {
           <UsernameInput value={inputStr} onChange={setInputStr} />
 
           <Button onClick={handleSearch} buttonText="Get Stats" />
+          {loading && (
+            <MultiStepLoader
+              loadingStates={loadingStates}
+              loading={loading}
+              duration={1100}
+            />
+          )}
         </div>
       </div>
     </>

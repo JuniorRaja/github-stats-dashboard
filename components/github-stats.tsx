@@ -308,12 +308,13 @@ const CardsComponent = ({ username }: { username: string }) => {
         setRepoStatsDetailed(updatedRepoStatus);
         setRepos(updatedRepos);
         await simulateLoading();
-        setLoading(false);
       }
     } catch (error: any) {
       setLoading(false);
       setError(error.message);
       console.error("fetchData -log: Error fetching data", error);
+    } finally {
+      setLoading(false);
     }
   };
 
